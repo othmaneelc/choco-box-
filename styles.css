@@ -2,16 +2,16 @@
    CHOCO BOX MAROC — Global Styles (Upgraded + Design Elevation)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 
 /* --- CSS Variables --- */
 :root {
   /* Anchor font — sets the whole personality */
-  --font-headline: 'Playfair Display', serif;
+  --font-headline: 'Playfair Display', Georgia, serif;
   /* Supporting font — high contrast, clean, modern */
-  --font-body: 'DM Sans', sans-serif;
+  --font-body: 'DM Sans', Arial, sans-serif;
   /* Accent font — romantic, editorial details */
-  --font-accent: 'Cormorant Garamond', serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
 
   --cream-light: #F5ECD7;
   --beige-warm: #E8D5B0;
@@ -135,13 +135,47 @@ body::before {
 }
 
 /* --- Typography --- */
-h1,
-h2,
-h3,
+h1 {
+  font-family: var(--font-headline);
+  font-weight: 900;
+  color: var(--cream-light);
+}
+
+h2 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  color: var(--cream-light);
+}
+
+h3 {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--cream-light);
+}
+
 .headline {
   font-family: var(--font-headline);
   font-weight: 700;
   color: var(--cream-light);
+}
+
+body,
+p,
+a,
+button,
+input,
+select,
+textarea,
+nav {
+  font-family: var(--font-body);
+}
+
+.price,
+[class*="price"] {
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: #C9924A;
 }
 
 .subheadline,
@@ -204,47 +238,6 @@ body {
 section {
   padding: clamp(4rem, 8vw, 8rem) 0;
   position: relative;
-}
-
-/* --- Custom Cursor (desktop only) --- */
-@media(pointer:fine) {
-  * {
-    cursor: none !important;
-  }
-}
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 10000;
-  pointer-events: none;
-  display: none;
-}
-
-@media(pointer:fine) {
-
-  .cursor-dot,
-  .cursor-ring {
-    display: block;
-  }
-}
-
-.cursor-dot {
-  width: 12px;
-  height: 12px;
-  background-color: var(--caramel);
-  transition: width 0.2s, height 0.2s;
-}
-
-.cursor-ring {
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(201, 146, 74, 0.4);
-  transition: all 0.2s;
 }
 
 /* --- Navigation --- */
@@ -1134,6 +1127,25 @@ footer {
 @media(max-width:480px) {
   .products-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .hero-btns .btn {
+    width: 100%;
+    margin-bottom: 0px;
+  }
+
+  .hero-star img {
+    max-width: 80%;
+  }
+
+  .hero {
+    padding-top: 100px;
   }
 }
 
