@@ -5,17 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#3B1A0A">
-    <title>La Collection | Choco Box Maroc</title>
+    <title>Collection — Box Chocolats Casablanca | Choco Box Maroc</title>
     <meta name="description"
-        content="Découvrez notre collection de box de chocolats premium pour la Saint-Valentin, anniversaires, mariages et cadeaux à Casablanca.">
+        content="Découvrez notre collection complète de box chocolats: Box Cœur, Box Étage, Box Ronde. Prix à partir de 300 DH. Livraison Casablanca. Choco Box Maroc.">
+    <link rel="canonical" href="https://choco-box.vercel.app/collection.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
     <link rel="preload" href="logo.png" as="image">
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="main.js" as="script">
+    <link rel="dns-prefetch" href="https://wa.me">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="elevation.css">
@@ -461,7 +458,8 @@
                 </div>
             </div>
             <div class="trust-signals">Paiement à la livraison · Packaging soigné · Fabriqué à Casablanca</div>
-            <div class="footer-bottom">&copy; 2025 Choco Box Maroc. Tous droits réservés.</div>
+            <div class="footer-bottom">&copy; <span id="year"></span> Choco Box Maroc. Tous droits réservés.</div>
+            <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
         </div>
     </footer>
 

@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#3B1A0A">
-    <title>Notre Histoire | Choco Box Maroc</title>
+    <title>Notre Histoire — Choco Box Maroc | Cadeaux Chocolats Casablanca</title>
     <meta name="description"
-        content="L'histoire de Choco Box Maroc, fondée par Imane Bahafid à Casablanca. Le meilleur cadeau est celui qui montre que tu as pensé à la personne.">
+        content="Choco Box Maroc, fondé par Imane Bahafid à Casablanca. Chaque box est assemblée à la main avec amour pour rendre chaque cadeau inoubliable.">
+    <link rel="canonical" href="https://choco-box.vercel.app/about.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -373,7 +374,8 @@
                 </div>
             </div>
             <div class="trust-signals">Paiement à la livraison · Packaging soigné · Fabriqué à Casablanca</div>
-            <div class="footer-bottom">&copy; 2025 Choco Box Maroc. Tous droits réservés.</div>
+            <div class="footer-bottom">&copy; <span id="year"></span> Choco Box Maroc. Tous droits réservés.</div>
+            <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
         </div>
     </footer>
 

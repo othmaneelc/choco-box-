@@ -5,17 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#3B1A0A">
-    <title>Choco Box Maroc — Unbox Happiness</title>
+    <title>Choco Box Maroc — Box Chocolats Cadeau Casablanca | Unbox Happiness</title>
     <meta name="description"
-        content="Box de chocolats faites à la main pour les moments inoubliables. Kinder, Ferrero Rocher, Raffaello. Livraison Casablanca.">
+        content="Choco Box Maroc crée des box de chocolats faites à la main à Casablanca. Kinder, Ferrero, Raffaello. Livraison same-day. Commandez sur WhatsApp: 0700773014">
+    <meta name="keywords"
+        content="box chocolat casablanca, cadeau chocolat maroc, ferrero box maroc, kinder box cadeau, box saint valentin casablanca">
+    <meta property="og:title" content="Choco Box Maroc — Cadeaux Chocolats Casablanca">
+    <meta property="og:description"
+        content="Des box de chocolats faites à la main pour chaque occasion. Livraison Casablanca. Commandez sur WhatsApp.">
+    <meta property="og:image" content="https://choco-box.vercel.app/box-coeur-ferrero-premium.png">
+    <meta property="og:url" content="https://choco-box.vercel.app">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://choco-box.vercel.app">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
     <link rel="preload" href="logo.png" as="image">
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="main.js" as="script">
+    <link rel="dns-prefetch" href="https://wa.me">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="elevation.css">
@@ -424,14 +430,12 @@
     <!-- SOCIAL PROOF -->
     <div class="social-proof">
         <div class="social-proof-inner">
-            <div class="stat-item"><span>🎁</span> +<span class="counter" data-target="500" data-prefix="">0</span> Box
-                livrées</div>
-            <div class="stat-item"><span>⭐</span> Clients <span class="counter" data-target="5" data-prefix="">0</span>
-                étoiles</div>
-            <div class="stat-item"><span>🚀</span> Livraison same-day Casablanca</div>
+            <div class="stat-item"><span>🎁</span> <span data-count="500" data-suffix="+">0</span> Box livrées</div>
+            <div class="stat-item"><span>⭐</span> Clients <span data-count="5" data-suffix="★">0</span> étoiles</div>
+            <div class="stat-item"><span>🚀</span> <span data-count="100" data-suffix="%">0</span> Livraison same-day
+            </div>
         </div>
     </div>
-
     <!-- WHY CHOCO BOX -->
     <section class="container" id="why-us">
         <div class="section-divider"><span>HÉRITAGE</span></div>
@@ -654,7 +658,8 @@
                 </div>
             </div>
             <div class="trust-signals">Paiement à la livraison · Packaging soigné · Fabriqué à Casablanca</div>
-            <div class="footer-bottom">&copy; 2025 Choco Box Maroc. Tous droits réservés.</div>
+            <div class="footer-bottom">&copy; <span id="year"></span> Choco Box Maroc. Tous droits réservés.</div>
+            <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
         </div>
     </footer>
 

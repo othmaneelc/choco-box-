@@ -182,32 +182,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── NUMBER COUNTER ANIMATION ──
-    const counterObs = new IntersectionObserver((entries, obs) => {
+    function animateCount(el, target, suffix) {
+        let start = 0;
+        const duration = 1800;
+        const step = target / (duration / 16);
+        const timer = setInterval(() => {
+            start = Math.min(start + step, target);
+            el.textContent = Math.floor(start) + suffix;
+            if (start >= target) clearInterval(timer);
+        }, 16);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const el = entry.target;
-                const target = parseInt(el.getAttribute('data-target'), 10);
-                const prefix = el.getAttribute('data-prefix') || '';
-                const suffix = el.getAttribute('data-suffix') || '';
-                let current = 0;
-                const duration = 2000;
-                let startTimestamp = null;
-                const step = (timestamp) => {
-                    if (!startTimestamp) startTimestamp = timestamp;
-                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                    // Easing animation (easeOutQuart)
-                    const easeProgress = 1 - Math.pow(1 - progress, 4);
-                    el.textContent = prefix + Math.floor(easeProgress * target) + suffix;
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    }
-                };
-                window.requestAnimationFrame(step);
-                obs.unobserve(el);
+                document.querySelectorAll('[data-count]').forEach(el => {
+                    animateCount(el, +el.dataset.count, el.dataset.suffix || '');
+                });
+                counterObserver.disconnect();
             }
         });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+    }, { threshold: 0.5 });
+
+    const statsEl = document.querySelector('[data-count]');
+    if (statsEl) counterObserver.observe(statsEl.closest('section') || statsEl);
 
     // ── 3D TILT ON PRODUCT CARDS (Desktop) ──
     if (window.matchMedia('(pointer:fine)').matches) {
@@ -427,5 +425,12 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => success.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
         });
     }
+    // ── GPU ACCELERATION CLEANUP ──
+    document.addEventListener('animationend', (e) => {
+        if (e.target.style) e.target.style.willChange = 'auto';
+    });
+    document.addEventListener('transitionend', (e) => {
+        if (e.target.style) e.target.style.willChange = 'auto';
+    });
 
 });  // End DOMContentLoaded

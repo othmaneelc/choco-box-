@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#3B1A0A">
-    <title>Contactez-Nous | Choco Box Maroc</title>
+    <title>Contact — Commander une Box | Choco Box Maroc Casablanca</title>
     <meta name="description"
-        content="Contactez Choco Box Maroc pour commander votre box de chocolats. Livraison same-day à Casablanca.">
+        content="Contactez Choco Box Maroc pour commander. WhatsApp: 0700773014. Livraison à Casablanca, Sidi Maarouf. Lundi-Samedi 9h-21h.">
+    <link rel="canonical" href="https://choco-box.vercel.app/contact.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -339,26 +340,56 @@
     <section class="container contact-grid">
         <div class="contact-form-container scroll-reveal">
             <h2>Laissez-nous un message</h2>
-            <form id="contactForm">
-                <div class="form-group"><label for="name">Prénom</label><input type="text" id="name"
-                        class="form-control" required placeholder="Votre prénom"></div>
-                <div class="form-group"><label for="phone">Numéro de téléphone</label><input type="tel" id="phone"
-                        class="form-control" required placeholder="Ex: 0612345678"></div>
-                <div class="form-group"><label for="occasion">Occasion</label>
-                    <select id="occasion" class="form-control" required>
-                        <option value="" disabled selected>Choisir une occasion</option>
-                        <option value="valentine">Saint-Valentin</option>
-                        <option value="anniversaire">Anniversaire</option>
-                        <option value="mariage">Mariage</option>
-                        <option value="autre">Autre Cadeau / Surprise</option>
-                    </select>
+            <form action="https://formspree.io/f/xyzgrpqb" method="POST" class="contact-form" id="contactForm">
+                <input type="text" name="name" placeholder="Votre prénom" required
+                    style="width:100%;padding:14px;margin-bottom:12px;background:rgba(59,26,10,0.5);border:1px solid rgba(201,146,74,0.2);border-radius:4px;color:#F5ECD7;font-size:16px;outline:none;">
+
+                <input type="tel" name="phone" placeholder="Votre numéro de téléphone" required
+                    style="width:100%;padding:14px;margin-bottom:12px;background:rgba(59,26,10,0.5);border:1px solid rgba(201,146,74,0.2);border-radius:4px;color:#F5ECD7;font-size:16px;outline:none;">
+
+                <select name="occasion" required
+                    style="width:100%;padding:14px;margin-bottom:12px;background:rgba(59,26,10,0.5);border:1px solid rgba(201,146,74,0.2);border-radius:4px;color:#F5ECD7;font-size:16px;outline:none;">
+                    <option value="">Pour quelle occasion?</option>
+                    <option value="valentine">Saint-Valentin</option>
+                    <option value="anniversaire">Anniversaire</option>
+                    <option value="mariage">Mariage</option>
+                    <option value="cadeau">Cadeau Surprise</option>
+                </select>
+
+                <textarea name="message" placeholder="Votre message..." rows="4" required
+                    style="width:100%;padding:14px;margin-bottom:16px;background:rgba(59,26,10,0.5);border:1px solid rgba(201,146,74,0.2);border-radius:4px;color:#F5ECD7;font-size:16px;outline:none;resize:vertical;"></textarea>
+
+                <button type="submit"
+                    style="width:100%;padding:16px;background:#C9924A;color:#1a0608;font-weight:700;font-size:16px;border:none;border-radius:4px;cursor:pointer;transition:opacity 0.2s;">
+                    Envoyer le message
+                </button>
+
+                <div id="formSuccess"
+                    style="display:none;margin-top:16px;padding:14px;background:rgba(37,211,102,0.15);border:1px solid #25D366;border-radius:4px;color:#25D366;text-align:center;">
+                    ✓ Message envoyé! Nous vous contacterons bientôt 🍫
                 </div>
-                <div class="form-group"><label for="message">Message ou demande spéciale</label><textarea id="message"
-                        class="form-control" required placeholder="Parlez-nous de ce que vous aimeriez..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary submit-btn">Envoyer</button>
             </form>
-            <div id="successMsg" class="success-message">Merci! Nous vous contacterons bientôt 🍫</div>
+            <script>
+                document.getElementById('contactForm').addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const btn = this.querySelector('button[type="submit"]');
+                    btn.textContent = 'Envoi en cours...';
+                    btn.style.opacity = '0.7';
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: new FormData(this),
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        this.reset();
+                        document.getElementById('formSuccess').style.display = 'block';
+                        btn.textContent = 'Message envoyé ✓';
+                    } else {
+                        btn.textContent = 'Erreur — réessayez';
+                        btn.style.opacity = '1';
+                    }
+                });
+            </script>
         </div>
 
         <div class="info-section">
@@ -422,7 +453,8 @@
                 </div>
             </div>
             <div class="trust-signals">Paiement à la livraison · Packaging soigné · Fabriqué à Casablanca</div>
-            <div class="footer-bottom">&copy; 2025 Choco Box Maroc. Tous droits réservés.</div>
+            <div class="footer-bottom">&copy; <span id="year"></span> Choco Box Maroc. Tous droits réservés.</div>
+            <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
         </div>
     </footer>
 
