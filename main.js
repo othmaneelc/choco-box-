@@ -43,18 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
         navbar.classList.add('has-ticker');
     }
 
-    // ── SCROLL PROGRESS BAR ──
+    // ── THROTTLED SCROLL (Progress, Navbar, BTT) ──
+    let isScrolling = false;
     const scrollBar = document.querySelector('.scroll-progress');
-    if (scrollBar) {
-        window.addEventListener('scroll', () => {
-            const docH = document.documentElement.scrollHeight - window.innerHeight;
-            if (docH > 0) scrollBar.style.width = ((window.scrollY / docH) * 100) + '%';
-        }, { passive: true });
-    }
+    const btt = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                if (scrollBar) {
+                    const docH = document.documentElement.scrollHeight - window.innerHeight;
+                    if (docH > 0) scrollBar.style.width = ((scrollY / docH) * 100) + '%';
+                }
+                if (navbar) navbar.classList.toggle('scrolled', scrollY > 50);
+                if (btt) btt.classList.toggle('visible', scrollY > 400);
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    }, { passive: true });
 
     // ── CUSTOM CURSOR ──
-    const dot = document.querySelector('.cursor-dot');
-    const ring = document.querySelector('.cursor-ring');
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
     if (dot && ring && window.matchMedia('(pointer:fine)').matches) {
         let mx = 0, my = 0, rx = 0, ry = 0;
         document.addEventListener('mousemove', e => {
@@ -66,52 +77,39 @@ document.addEventListener('DOMContentLoaded', () => {
             ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
             requestAnimationFrame(animRing);
         })();
-        document.querySelectorAll('a,button,.card,.btn').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                ring.style.width = '50px'; ring.style.height = '50px';
-                ring.style.backgroundColor = 'rgba(201,146,74,0.1)';
-                ring.style.borderColor = 'rgba(201,146,74,0.8)';
-            });
-            el.addEventListener('mouseleave', () => {
-                ring.style.width = '30px'; ring.style.height = '30px';
-                ring.style.backgroundColor = 'transparent';
-                ring.style.borderColor = 'rgba(201,146,74,0.4)';
-            });
+        document.body.addEventListener('mouseover', e => {
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.card') || e.target.closest('.btn')) {
+                document.body.classList.add('hovering');
+            }
+        });
+        document.body.addEventListener('mouseout', e => {
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.card') || e.target.closest('.btn')) {
+                document.body.classList.remove('hovering');
+            }
         });
     }
 
     // ── MOBILE NAV ──
     const hamburger = document.querySelector('.hamburger');
-    const overlay = document.querySelector('.mobile-nav-overlay');
+    const overlay = document.querySelector('.mobile-menu') || document.querySelector('.mobile-nav-overlay');
     if (hamburger && overlay) {
         hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
             hamburger.classList.toggle('active');
             overlay.classList.toggle('open');
-            // Stagger link appear
-            overlay.querySelectorAll('a').forEach((a, i) => {
-                a.style.transitionDelay = overlay.classList.contains('open') ? (i * 0.1) + 's' : '0s';
-            });
         });
         overlay.querySelectorAll('a').forEach(a => {
             a.addEventListener('click', () => {
-                hamburger.classList.remove('active');
+                hamburger.classList.remove('open', 'active');
                 overlay.classList.remove('open');
             });
         });
-        // Close on click outside
         overlay.addEventListener('click', e => {
             if (e.target === overlay) {
-                hamburger.classList.remove('active');
+                hamburger.classList.remove('open', 'active');
                 overlay.classList.remove('open');
             }
         });
-    }
-
-    // ── NAVBAR SCROLL ──
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        }, { passive: true });
     }
 
     // ── SCROLL REVEAL (Intersection Observer) ──
@@ -123,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 obs.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
     revealEls.forEach(el => revealObs.observe(el));
 
     // Hero text reveal on load
@@ -147,6 +145,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.2 });
     document.querySelectorAll('.word-reveal').forEach(el => wordObs.observe(el));
+
+    // ── PRINCIPLE 2 — THE STAR OF THE SHOW (PETALS) ──
+    const starEl = document.querySelector('.hero-star');
+    if (starEl) {
+        for (let i = 0; i < 15; i++) {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.left = (Math.random() * 120 - 10) + '%';
+            petal.style.top = (Math.random() * 100) + '%';
+            petal.style.animationDuration = (4 + Math.random() * 6) + 's';
+            petal.style.animationDelay = (Math.random() * 6) + 's';
+            petal.style.transform = `scale(${0.5 + Math.random()}) rotate(${Math.random() * 360}deg)`;
+            starEl.appendChild(petal);
+        }
+    }
 
     // ── HERO CANVAS PARTICLES ──
     const heroCanvas = document.getElementById('hero-particles-canvas');
@@ -202,24 +215,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = parseInt(el.getAttribute('data-target'), 10);
                 const prefix = el.getAttribute('data-prefix') || '';
                 const suffix = el.getAttribute('data-suffix') || '';
-                let start = 0;
+                let current = 0;
                 const duration = 2000;
-                const startTime = performance.now();
+                const stepTime = 20;
+                const steps = duration / stepTime;
+                const increment = target / steps;
 
-                function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-                function update(now) {
-                    const elapsed = now - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const current = Math.round(easeOutCubic(progress) * target);
-                    el.textContent = prefix + current + suffix;
-                    if (progress < 1) requestAnimationFrame(update);
-                }
-                requestAnimationFrame(update);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    el.textContent = prefix + Math.floor(current) + suffix;
+                }, stepTime);
                 obs.unobserve(el);
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 });
     document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
 
     // ── 3D TILT ON PRODUCT CARDS (Desktop) ──
@@ -410,11 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── BACK TO TOP ──
-    const btt = document.querySelector('.back-to-top');
     if (btt) {
-        window.addEventListener('scroll', () => {
-            btt.classList.toggle('visible', window.scrollY > 400);
-        }, { passive: true });
         btt.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });

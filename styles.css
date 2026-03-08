@@ -1,9 +1,18 @@
 /* ============================================================
-   CHOCO BOX MAROC — Global Styles (Upgraded)
+   CHOCO BOX MAROC — Global Styles (Upgraded + Design Elevation)
    ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap');
 
 /* --- CSS Variables --- */
 :root {
+  /* Anchor font — sets the whole personality */
+  --font-headline: 'Playfair Display', serif;
+  /* Supporting font — high contrast, clean, modern */
+  --font-body: 'DM Sans', sans-serif;
+  /* Accent font — romantic, editorial details */
+  --font-accent: 'Cormorant Garamond', serif;
+
   --cream-light: #F5ECD7;
   --beige-warm: #E8D5B0;
   --caramel: #C9924A;
@@ -12,10 +21,6 @@
   --bg-dark: #1e0d05;
   --bg-darkest: #1a0608;
   --whatsapp-green: #25D366;
-
-  --font-headline: 'Playfair Display', serif;
-  --font-subhead: 'Cormorant Garamond', serif;
-  --font-body: 'DM Sans', sans-serif;
 
   --glow: 0 4px 20px rgba(201, 146, 74, 0.15);
   --glow-hover: 0 8px 30px rgba(201, 146, 74, 0.4);
@@ -39,6 +44,8 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -50,14 +57,16 @@ body {
   position: relative;
 }
 
-/* Grain texture overlay */
-body::after {
+/* Grain texture overlay (New Layer 1) */
+body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.032;
   pointer-events: none;
-  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)" opacity="0.04"/%3E%3C/svg%3E');
+  z-index: 9997;
+  mix-blend-mode: overlay;
 }
 
 /* --- Scroll Progress Bar --- */

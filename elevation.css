@@ -1,0 +1,316 @@
+/* ============================================================
+   CHOCO BOX MAROC — Elevation Styles
+   ============================================================ */
+
+/* --- PRINCIPLE 2: THE STAR OF THE SHOW --- */
+/* Floating Hero Image Animation */
+.hero-star {
+    animation: heroFloat 6s ease-in-out infinite;
+    position: relative;
+    display: inline-block;
+}
+
+.hero-star img {
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
+}
+
+.hero-star::after {
+    content: '';
+    position: absolute;
+    inset: -30px;
+    background: radial-gradient(circle, rgba(201, 146, 74, 0.4) 0%, transparent 70%);
+    z-index: -1;
+    filter: blur(20px);
+}
+
+@keyframes heroFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* --- PRINCIPLE 3: VISUAL RHYMING --- */
+
+/* Heart icon prefix for section eyebrows */
+.section-eyebrow::before {
+    content: '♥';
+    color: var(--caramel);
+    margin-right: 8px;
+    font-size: 0.9em;
+}
+
+/* Ribbon-style CTA buttons */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px 3px 0 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.btn-primary:hover::after {
+    transform: scaleX(1);
+}
+
+/* Heart hover indicator on product cards */
+.product-card {
+    position: relative;
+}
+
+.product-card::before {
+    content: '♥';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--caramel);
+    font-size: 1.5rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.product-card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Section divider */
+.section-divider {
+    text-align: center;
+    margin: 4rem 0 2rem;
+    position: relative;
+}
+
+.section-divider::before,
+.section-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--caramel), transparent);
+}
+
+.section-divider::before {
+    left: 10%;
+}
+
+.section-divider::after {
+    right: 10%;
+}
+
+.section-divider span {
+    font-family: var(--font-accent);
+    color: var(--caramel);
+    padding: 0 1rem;
+    font-style: italic;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+/* --- PRINCIPLE 4: DEPTH & TEXTURE (Glassmorphism & 3D cards) --- */
+.feature-card,
+.occasion-card,
+.testimonial-card,
+.contact-form-container {
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* --- PRINCIPLE 5: TEXT OPACITY HIERARCHY --- */
+.headline {
+    opacity: 1;
+}
+
+.subheadline {
+    opacity: 0.9;
+}
+
+p,
+.product-desc,
+.review-text {
+    opacity: 0.75;
+}
+
+.tagline,
+.product-badge,
+.reviewer,
+.founder-role {
+    opacity: 0.6;
+}
+
+/* --- GRID NAVIGATION FIX --- */
+.navbar {
+    padding: 1rem 0;
+}
+
+.nav-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-logo-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-logo-wrap img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: lighten;
+}
+
+.desktop-nav {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.desktop-nav a {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cream-light);
+    opacity: 0.8;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+    opacity: 1;
+    color: var(--caramel);
+}
+
+/* Hamburger hidden on desktop */
+.hamburger {
+    display: none;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: var(--chocolate-deep);
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.mobile-menu.open {
+    left: 0;
+}
+
+.mobile-menu a {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    color: var(--cream-light);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
+}
+
+.mobile-menu.open a {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mobile-menu a:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.mobile-menu a:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.mobile-menu a:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.mobile-menu a:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+@media(max-width: 900px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 9999;
+    }
+
+    .hamburger span {
+        width: 100%;
+        height: 2px;
+        background: var(--cream-light);
+        transition: 0.3s;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    .nav-logo-wrap img {
+        height: 50px;
+    }
+}
