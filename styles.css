@@ -1459,3 +1459,107 @@ section {
     font-size: 110%;
   }
 }
+
+/* FAQ ACCORDION */
+.faq-accordion {
+  max-width: 800px;
+  margin: 40px auto 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(201, 146, 74, 0.15);
+  margin-bottom: 10px;
+}
+
+.faq-question {
+  width: 100%;
+  padding: 24px 0;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #F5ECD7;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+  color: #C9924A;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-answer p {
+  padding-bottom: 24px;
+  color: rgba(245, 236, 215, 0.7);
+  line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 200px;
+}
+
+.faq-item.active .faq-question span {
+  transform: rotate(45deg);
+  color: #C9924A;
+}
+
+.faq-question span {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+  color: rgba(201, 146, 74, 0.5);
+}
+
+/* STICKY ORDER BAR */
+.sticky-order-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(15, 4, 1, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(201, 146, 74, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 9998;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.sticky-order-bar.visible {
+  transform: translateY(0);
+}
+
+.sticky-order-bar span {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #F5ECD7;
+}
+
+.sticky-order-bar a {
+  background: #C9924A;
+  color: #1a0608;
+  padding: 12px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .sticky-order-bar {
+    display: none;
+  }
+}

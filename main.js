@@ -434,3 +434,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });  // End DOMContentLoaded
+
+// ── FAQ ACCORDION ──
+document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const item = button.parentElement;
+        const wasActive = item.classList.contains('active');
+
+        // Close all other items
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+            otherItem.classList.remove('active');
+        });
+
+        if (!wasActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+// ── STICKY ORDER BAR ──
+const stickyBar = document.querySelector('.sticky-order-bar');
+if (stickyBar) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 600) {
+            stickyBar.classList.add('visible');
+        } else {
+            stickyBar.classList.remove('visible');
+        }
+    });
+}
