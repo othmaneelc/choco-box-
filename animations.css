@@ -1,0 +1,163 @@
+/* ============================================================
+   CHOCO BOX MAROC — Animations (Upgraded)
+   ============================================================ */
+
+/* --- Word-Split Reveal (triggered by JS) --- */
+.word-reveal .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px) rotateX(15deg);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+        transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.word-reveal.revealed .word {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+}
+
+/* --- Scroll Reveal --- */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+        transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.scroll-reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays */
+.delay-1 {
+    transition-delay: 0.1s !important;
+}
+
+.delay-2 {
+    transition-delay: 0.25s !important;
+}
+
+.delay-3 {
+    transition-delay: 0.4s !important;
+}
+
+.delay-4 {
+    transition-delay: 0.55s !important;
+}
+
+.delay-5 {
+    transition-delay: 0.7s !important;
+}
+
+/* --- Initial hero text reveal --- */
+.reveal-text {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.reveal-text.visible {
+    animation: fadeUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Bounce (scroll indicator) --- */
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-15px);
+    }
+
+    60% {
+        transform: translateY(-7px);
+    }
+}
+
+.bounce {
+    animation: bounce 2s infinite;
+}
+
+/* --- WhatsApp Pulse --- */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* --- Hero Particles (CSS fallback – JS canvas preferred) --- */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background-color: var(--caramel);
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: var(--max-opacity, 0.6);
+    }
+
+    90% {
+        opacity: var(--max-opacity, 0.6);
+    }
+
+    100% {
+        transform: translateY(-100vh) translateX(var(--drift, 20px));
+        opacity: 0;
+    }
+}
+
+/* --- Occasion card icon bounce --- */
+@keyframes iconBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.occasion-card:hover .occasion-icon,
+.occasion-card:focus .occasion-icon {
+    animation: iconBounce 0.5s ease;
+}

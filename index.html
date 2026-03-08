@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choco Box Maroc — Unbox Happiness</title>
+    <meta name="description"
+        content="Box de chocolats faites à la main pour les moments inoubliables. Kinder, Ferrero Rocher, Raffaello. Livraison Casablanca.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <style>
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 40%, #5c2010 0%, #3B1A0A 40%, #1a0608 100%);
+        }
+
+        #hero-particles-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 850px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero h1 .accent {
+            color: var(--caramel);
+        }
+
+        .hero p.sub {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            margin: 2rem auto 3rem;
+            max-width: 650px;
+            color: var(--cream-light);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--caramel);
+            font-size: 2rem;
+            z-index: 10;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            background: var(--chocolate-mid);
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(201, 146, 74, 0.3);
+            border-bottom: 1px solid rgba(201, 146, 74, 0.3);
+        }
+
+        .social-proof-inner {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            font-weight: 500;
+            color: var(--cream-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--caramel);
+            margin-bottom: 1rem;
+        }
+
+        /* Featured Products */
+        .products-grid-home {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .product-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .view-all a {
+            color: var(--caramel);
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--caramel);
+            padding-bottom: 2px;
+        }
+
+        /* Brand Story */
+        .brand-story {
+            background: #1a0b04;
+            padding: clamp(4rem, 10vw, 8rem) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-quote {
+            font-size: clamp(1.6rem, 3vw, 2.5rem);
+            line-height: 1.3;
+            color: var(--cream-light);
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            color: var(--beige-warm);
+            line-height: 1.8;
+        }
+
+        /* Occasions */
+        .occasions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .occasion-card {
+            padding: 3rem 1rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(201, 146, 74, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .occasion-card:hover,
+        .occasion-card:focus {
+            border-color: var(--caramel);
+            background: rgba(201, 146, 74, 0.05);
+            transform: scale(1.03);
+        }
+
+        .occasion-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .occasion-card span:last-child {
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            padding: 2.5rem;
+            background: linear-gradient(145deg, #221007, #1a0b04);
+        }
+
+        .stars {
+            color: var(--caramel);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .review-text {
+            font-family: var(--font-subhead);
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--cream-light);
+        }
+
+        .reviewer {
+            color: var(--caramel);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: radial-gradient(circle at center, #2e1408, #1a0b04);
+            text-align: center;
+            padding: clamp(5rem, 10vw, 8rem) 0;
+            border-top: 1px solid var(--caramel);
+        }
+
+        .cta-banner h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .cta-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media(max-width:900px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .occasions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:600px) {
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .occasions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .social-proof-inner {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+
+    <!-- Page Transition -->
+    <div class="page-transition"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Ticker -->
+    <div class="ticker-bar">
+        <div class="ticker-content">
+            <span>🍫 Livraison disponible à Casablanca</span>
+            <span>·</span>
+            <span>Commandez avant 18h pour livraison le jour même</span>
+            <span>·</span>
+            <span>+500 clients satisfaits</span>
+            <span>·</span>
+            <span>⭐⭐⭐⭐⭐</span>
+            <!-- Duplicate for seamless scroll -->
+            <span>🍫 Livraison disponible à Casablanca</span>
+            <span>·</span>
+            <span>Commandez avant 18h pour livraison le jour même</span>
+            <span>·</span>
+            <span>+500 clients satisfaits</span>
+            <span>·</span>
+            <span>⭐⭐⭐⭐⭐</span>
+        </div>
+        <button class="ticker-close" aria-label="Close">&times;</button>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/212700773014" target="_blank" class="btn-whatsapp-float" aria-label="WhatsApp">
+        <div class="wa-ring"></div>
+        <div class="wa-ring"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+            <path
+                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+        </svg>
+        <span class="wa-tooltip">Commander maintenant 🍫</span>
+    </a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" aria-label="Retour en haut">↑</button>
+
+    <!-- Sticky Order Bar (Mobile) -->
+    <div class="sticky-order-bar">
+        <span>Commandez maintenant</span>
+        <a href="https://wa.me/212700773014" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+            </svg>
+            WhatsApp
+        </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+            <a href="index.html" class="logo-wrapper">
+                <img src="Bleu Blanc Minimaliste Simple Moderne Typographic Ciel Azur Galerie D'art Logo.png"
+                    alt="Choco Box Maroc"
+                    onerror="this.onerror=null;this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Playfair Display,serif;font-size:1.5rem;color:#F5ECD7\'>CHOCO BOX</span>';">
+            </a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Accueil</a></li>
+                    <li><a href="collection.html">Collection</a></li>
+                    <li><a href="about.html">À Propos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="https://wa.me/212700773014" target="_blank" class="nav-wa" aria-label="WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav-overlay">
+        <a href="index.html">Accueil</a>
+        <a href="collection.html">Collection</a>
+        <a href="about.html">À Propos</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <canvas id="hero-particles-canvas"></canvas>
+        <div class="hero-content">
+            <h1 class="headline word-reveal">
+                <span>Certains sentiments ne se disent pas.</span>
+                <span class="accent">Ils s'offrent.</span>
+            </h1>
+            <p class="sub reveal-text delay-3">Des box de chocolats faites à la main — pour les moments qui méritent
+                plus qu'un simple cadeau. Livrées à Casablanca.</p>
+            <div class="hero-btns reveal-text delay-4">
+                <a href="https://wa.me/212700773014" target="_blank" class="btn btn-primary magnetic">Commander sur
+                    WhatsApp 💬</a>
+                <a href="collection.html" class="btn btn-secondary magnetic">Voir la Collection →</a>
+            </div>
+        </div>
+        <div class="scroll-down bounce">↓</div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <div class="social-proof">
+        <div class="social-proof-inner">
+            <div class="stat-item"><span>🎁</span> +<span class="counter" data-target="500" data-prefix="">0</span> Box
+                livrées</div>
+            <div class="stat-item"><span>⭐</span> Clients <span class="counter" data-target="5" data-prefix="">0</span>
+                étoiles</div>
+            <div class="stat-item"><span>🚀</span> Livraison same-day Casablanca</div>
+        </div>
+    </div>
+
+    <!-- WHY CHOCO BOX -->
+    <section class="container" id="why-us">
+        <h2 class="section-title word-reveal">Ce qui nous rend différents</h2>
+        <div class="features-grid">
+            <div class="card feature-card scroll-reveal delay-1">
+                <span class="feature-icon">🎀</span>
+                <h3>Personnalisé</h3>
+                <p>Chaque box est assemblée à la main avec amour et une attention absolue aux détails.</p>
+            </div>
+            <div class="card feature-card scroll-reveal delay-2">
+                <span class="feature-icon">🍫</span>
+                <h3>Chocolats Premium</h3>
+                <p>Ferrero Rocher, Kinder, Raffaello, Snickers et d'autres marques d'excellence.</p>
+            </div>
+            <div class="card feature-card scroll-reveal delay-3">
+                <span class="feature-icon">📦</span>
+                <h3>Packaging Élégant</h3>
+                <p>Des présentations soignées et esthétiques pour sublimer chaque occasion.</p>
+            </div>
+            <div class="card feature-card scroll-reveal delay-4">
+                <span class="feature-icon">⚡</span>
+                <h3>Livraison Rapide</h3>
+                <p>Disponible à Casablanca, commandez aujourd'hui pour une livraison express.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="decorative-divider">
+        <div class="line"></div>
+        <div class="diamond"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="container" id="featured">
+        <h2 class="section-title word-reveal">Nos créations les plus aimées</h2>
+        <div class="products-grid-home">
+            <div class="card product-card scroll-reveal delay-1">
+                <div class="img-wrapper">
+                    <span class="product-badge">❤️ Coup de cœur</span>
+                    <img data-src="Box cœur Ferrero premium.png" src="Box cœur Ferrero premium.png"
+                        alt="Box Cœur Ferrero Premium" loading="lazy">
+                    <div class="img-overlay"><button class="quick-view-btn">👁 Aperçu</button></div>
+                </div>
+                <div class="product-info">
+                    <h3>Box Cœur Ferrero Premium</h3>
+                    <p class="product-desc">Grande box cœur Ferrero, bordure décorative rouge.</p>
+                    <div class="product-price">400 DH</div>
+                    <a href="https://wa.me/212700773014?text=Bonjour%2C%20je%20voudrais%20commander%20la%20Box%20C%C5%93ur%20Ferrero%20Premium"
+                        target="_blank" class="btn btn-secondary" style="width:100%">Commander →</a>
+                </div>
+            </div>
+            <div class="card product-card scroll-reveal delay-2">
+                <div class="img-wrapper">
+                    <span class="product-badge">⚡ Populaire</span>
+                    <img data-src="choco box etage.png" src="choco box etage.png" alt="Box Choco Box Étage"
+                        loading="lazy">
+                    <div class="img-overlay"><button class="quick-view-btn">👁 Aperçu</button></div>
+                </div>
+                <div class="product-info">
+                    <h3>Box Choco Box Étage</h3>
+                    <p class="product-desc">Grande box multi-étages, chocolats assortis, ruban rouge.</p>
+                    <div class="product-price">600 DH</div>
+                    <a href="https://wa.me/212700773014?text=Bonjour%2C%20je%20voudrais%20commander%20la%20Box%20Choco%20Box%20%C3%89tage"
+                        target="_blank" class="btn btn-secondary" style="width:100%">Commander →</a>
+                </div>
+            </div>
+            <div class="card product-card scroll-reveal delay-3">
+                <div class="img-wrapper">
+                    <img data-src="Box cœur rose Ferrero.png" src="Box cœur rose Ferrero.png"
+                        alt="Box Cœur Rose Ferrero" loading="lazy">
+                    <div class="img-overlay"><button class="quick-view-btn">👁 Aperçu</button></div>
+                </div>
+                <div class="product-info">
+                    <h3>Box Cœur Rose Ferrero</h3>
+                    <p class="product-desc">Roses roses + Ferrero Rocher au centre, élégance pure.</p>
+                    <div class="product-price">400 DH</div>
+                    <a href="https://wa.me/212700773014?text=Bonjour%2C%20je%20voudrais%20commander%20la%20Box%20C%C5%93ur%20Rose%20Ferrero"
+                        target="_blank" class="btn btn-secondary" style="width:100%">Commander →</a>
+                </div>
+            </div>
+        </div>
+        <div class="view-all scroll-reveal"><a href="collection.html">Voir tous nos produits →</a></div>
+    </section>
+
+    <!-- BRAND STORY -->
+    <section class="brand-story">
+        <div class="container story-grid">
+            <div class="story-quote subheadline word-reveal">"On ne vend pas du chocolat. On vend le moment où elle
+                ouvre la box."</div>
+            <div class="story-text scroll-reveal delay-2">
+                Choco Box crée des box de chocolats magnifiquement conçues pour transformer chaque moment en quelque
+                chose de spécial. Chaque box est soigneusement arrangée avec Kinder, Ferrero Rocher, Raffaello, Snickers
+                et plus encore. Que ce soit un anniversaire, une surprise romantique ou un mariage — nous rendons chaque
+                cadeau inoubliable.
+            </div>
+        </div>
+    </section>
+
+    <!-- OCCASIONS -->
+    <section class="container">
+        <h2 class="section-title word-reveal">Pour quelle occasion?</h2>
+        <div class="occasions-grid">
+            <a href="collection.html#Valentine" class="occasion-card scroll-reveal delay-1">
+                <span class="occasion-icon">❤️</span>
+                <span>Saint-Valentin</span>
+            </a>
+            <a href="collection.html#Anniversaire" class="occasion-card scroll-reveal delay-2">
+                <span class="occasion-icon">🎂</span>
+                <span>Anniversaire</span>
+            </a>
+            <a href="collection.html#Mariage" class="occasion-card scroll-reveal delay-3">
+                <span class="occasion-icon">💍</span>
+                <span>Mariage</span>
+            </a>
+            <a href="collection.html#Cadeau" class="occasion-card scroll-reveal delay-4">
+                <span class="occasion-icon">🎁</span>
+                <span>Cadeau Surprise</span>
+            </a>
+        </div>
+    </section>
+
+    <div class="decorative-divider">
+        <div class="line"></div>
+        <div class="diamond"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- MID-PAGE CTA -->
+    <section class="container" style="text-align:center;padding:4rem 0;">
+        <a href="https://wa.me/212700773014" target="_blank" class="btn btn-primary magnetic"
+            style="font-size:1.1rem;padding:1.2rem 2.5rem;">Commander sur WhatsApp 💬</a>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="container" style="padding-bottom:8rem;">
+        <h2 class="section-title word-reveal">Ce que disent nos clients</h2>
+        <div class="testimonials-grid">
+            <div class="card testimonial-card scroll-reveal delay-1">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"La box était magnifique, elle a pleuré en l'ouvrant 🥹"</div>
+                <div class="reviewer">— Sara M., Casablanca</div>
+            </div>
+            <div class="card testimonial-card scroll-reveal delay-2">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"Livraison rapide, présentation impeccable. Je recommande vraiment."</div>
+                <div class="reviewer">— Youssef K., Casablanca</div>
+            </div>
+            <div class="card testimonial-card scroll-reveal delay-3">
+                <div class="stars">★★★★★</div>
+                <div class="review-text">"Parfait pour la Saint-Valentin. Mon copain a adoré l'attention aux détails."
+                </div>
+                <div class="reviewer">— Nadia R., Casablanca</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner">
+        <div class="container scroll-reveal">
+            <h2 class="headline word-reveal">Prête à offrir quelque chose d'inoubliable?</h2>
+            <p>Contactez-nous maintenant — chaque box est faite avec amour.</p>
+            <a href="https://wa.me/212700773014" target="_blank" class="btn btn-primary magnetic pulse-animation"
+                style="font-size:1.1rem;padding:1.2rem 2.5rem;">Commander Maintenant sur WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <a href="index.html"><img
+                    src="Bleu Blanc Minimaliste Simple Moderne Typographic Ciel Azur Galerie D'art Logo.png"
+                    alt="Choco Box Maroc" class="footer-logo-img" onerror="this.style.display='none';"></a>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo-text">CHOCO BOX</div>
+                    <div class="tagline" style="margin-bottom:1rem;">Unbox Happiness</div>
+                    <p>Sidi Maarouf, Casablanca<br>Maroc</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="collection.html">Collection</a></li>
+                        <li><a href="about.html">À Propos</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:+212700773014">0700773014</a></li>
+                        <li><a href="https://wa.me/212700773014" target="_blank" rel="noopener">WhatsApp</a></li>
+                        <li><a href="https://www.instagram.com/choco.box_maroc" target="_blank"
+                                rel="noopener">@choco.box_maroc</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="trust-signals">Paiement à la livraison · Packaging soigné · Fabriqué à Casablanca</div>
+            <div class="footer-bottom">&copy; 2025 Choco Box Maroc. Tous droits réservés.</div>
+        </div>
+    </footer>
+
+    <!-- Quick-View Modal -->
+    <div class="modal-overlay">
+        <button class="modal-close" aria-label="Fermer">&times;</button>
+        <div class="modal-content">
+            <img class="modal-img" src="" alt="Product">
+            <div class="modal-body">
+                <h2></h2>
+                <p class="modal-desc"></p>
+                <div class="price"></div>
+                <a href="#" target="_blank" class="btn btn-primary modal-wa-btn" style="width:100%">Commander sur
+                    WhatsApp 💬</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js" defer></script>
+</body>
+
+</html>
