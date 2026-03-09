@@ -388,11 +388,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── WHATSAPP FLOAT ENTRANCE ──
-    const waFloat = document.querySelector('.btn-whatsapp-float');
-    if (waFloat) {
-        setTimeout(() => { waFloat.classList.add('entered'); }, 2000);
-    }
 
     // ── BACK TO TOP ──
     if (btt) {
@@ -452,14 +447,3 @@ document.querySelectorAll('.faq-question').forEach(button => {
     });
 });
 
-// ── STICKY ORDER BAR ──
-const stickyBar = document.querySelector('.sticky-order-bar');
-if (stickyBar) {
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 600) {
-            stickyBar.classList.add('visible');
-        } else {
-            stickyBar.classList.remove('visible');
-        }
-    });
-}
