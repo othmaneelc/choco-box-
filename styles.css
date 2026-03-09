@@ -1353,13 +1353,66 @@ section {
   white-space: nowrap;
 }
 
-/* WHATSAPP FLOAT — Mobile: above sticky bar */
-.floating-whatsapp,
-.whatsapp-float {
-  position: fixed !important;
-  bottom: 76px !important;
-  right: 20px !important;
-  z-index: 9999 !important;
+/* Floating social buttons — fixed right side */
+.floating-socials,
+.social-float,
+.fixed-socials {
+  position: fixed;
+  right: 16px;
+  bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.floating-socials a,
+.social-float a,
+.fixed-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(10, 3, 1, 0.85);
+  border: 1px solid rgba(201, 146, 74, 0.35);
+  color: #C9924A;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.floating-socials a:hover,
+.social-float a:hover {
+  transform: scale(1.1);
+  background: rgba(201, 146, 74, 0.15);
+}
+
+.floating-socials a svg,
+.social-float a svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Mobile adjustments for floating socials */
+@media (max-width: 767px) {
+
+  .floating-socials,
+  .social-float,
+  .fixed-socials {
+    bottom: 76px;
+    /* Above sticky order bar */
+    right: 14px;
+  }
+
+  .floating-socials a,
+  .social-float a {
+    width: 42px;
+    height: 42px;
+  }
 }
 
 /* DESKTOP OVERRIDES */
@@ -1368,10 +1421,6 @@ section {
     display: none !important;
   }
 
-  .floating-whatsapp,
-  .whatsapp-float {
-    bottom: 28px !important;
-  }
 
   .desktop-nav {
     display: flex !important;
